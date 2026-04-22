@@ -1,0 +1,34 @@
+# Dependencias
+node_modules/
+dist/
+plugin/index.js
+plugin/index.js.map
+
+# Archivos temporales de InDesign (muy importante)
+*.idlk
+*.tmp
+~*.indd
+.DS_Store
+
+# Archivos generados por el plugin (Carpeta de datos)
+# Evita subir los anillos SVG que crea el script
+plugin/anillo_*.svg
+plugin/fix_anillo_*.svg
+*.log
+
+# Entorno y Configuración de IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs de error de npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Carpeta de build de Webpack (si usas una distinta a plugin/dist)
+build/
