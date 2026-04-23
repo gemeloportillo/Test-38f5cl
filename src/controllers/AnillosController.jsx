@@ -8,7 +8,7 @@ const coloresSistemas = {
     "s1": "#f39889", "s2": "#ae62a4", "s3": "#8f84be", "s6": "#38a6cc"
 };
 
-async function generarAnilloSVG(porcentaje, sId, colorHex) {
+async function generarAnilloSVG(porcentaje, sId, colorHex, prefijo) {
     const perimetro = 157;
     const guion = (porcentaje / 100) * perimetro;
     const svgCode = `<?xml version="1.0" encoding="UTF-8"?>
@@ -17,7 +17,12 @@ async function generarAnilloSVG(porcentaje, sId, colorHex) {
     <circle class="st1" cx="25" cy="25" r="25"/><circle class="st0" cx="25" cy="25" r="25" transform="rotate(-90 25 25)"/></svg>`;
 
     const dataFolder = await fs.getDataFolder();
-    const tempFile = await dataFolder.createFile(`anillo_${sId}.svg`, { overwrite: true });
+    // CAMBIO AQUÍ: Nombre de archivo único por estado y sistema
+    // Limpiamos el nombre para que no cause errores de archivo (quitamos espacios y tildes)
+    const nombreLimpio = prefijo.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '_').toLowerCase();
+    const nombreArchivo = `anillo_${nombreLimpio}_${sId}.svg`;
+
+    const tempFile = await dataFolder.createFile(nombreArchivo, { overwrite: true });
     await tempFile.write(svgCode);
     return tempFile;
 }
@@ -151,7 +156,8 @@ export async function actualizarAnillos(pagina, estado) {
             const marcoPie = buscarSeguro(pagina, `pie_total_${sId}`);
             if (marcoPie) {
                 const color = coloresSistemas[sId];
-                const svgFile = await generarAnilloSVG(res.porcentaje, sId, color);
+
+                const svgFile = await generarAnilloSVG(res.porcentaje, sId, color, estado.name);
                 await esperar(100);
                 await marcoPie.place(svgFile);
 
