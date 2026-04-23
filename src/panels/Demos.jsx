@@ -20,10 +20,10 @@ export const Demos = () => {
 
         // 2. Tomamos el primer estado (Aguascalientes) para la prueba
         // Cuando hagamos los 32, esto irá dentro de un bucle
-        //const estadoSeleccionado = datos[2]; 
+        const estadoSeleccionado = datos[0]; 
 
         // BUSCAMOS A COAHUILA EN TU JSON
-        const estadoSeleccionado = datos.find(e => e.name === "Durango") || datos[8]; 
+        // const estadoSeleccionado = datos.find(e => e.name === "Durango") || datos[8]; 
         // (Puse datos[4] como respaldo, pero el .find lo encontrará por nombre)
 
         console.log(`Probando caso extremo con: ${estadoSeleccionado.name}`);
